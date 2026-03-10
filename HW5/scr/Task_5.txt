@@ -1,0 +1,25 @@
+#!/bin/bash
+
+#Task 5
+
+echo "Enter the file name:"
+read INPUT_FILE
+
+if [[ -f "$INPUT_FILE" ]]; then
+    echo "File found."
+
+    echo "Enter the path from where to copy:"
+    read INPUT_COPY_FROM
+
+    echo "Enter the path to copy:"
+    read INPUT_COPY_WHERE
+
+    if cp "$INPUT_COPY_FROM/$INPUT_FILE" "$INPUT_COPY_WHERE/$INPUT_FILE"; then
+        echo "The file was successfully copied."
+    else
+        echo "Copy failed."
+    fi
+
+else
+    echo "File not found."
+fi

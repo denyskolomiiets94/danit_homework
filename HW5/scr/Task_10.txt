@@ -1,0 +1,14 @@
+#!/bin/bash
+
+WATCH_DIR="$HOME/watch"
+
+mkdir -p "$WATCH_DIR"
+
+inotifywait -m -e create "$WATCH_DIR" | while read path action file
+do
+    echo "New file: $file"
+
+    cat "$WATCH_DIR/$file"
+
+    mv "$WATCH_DIR/$file" "$WATCH_DIR/$file.back"
+done

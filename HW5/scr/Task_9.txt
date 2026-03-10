@@ -1,0 +1,18 @@
+#!/bin/bash
+
+#file="test.txt"
+
+if [[ $# -eq 0 ]];then
+        echo "Usage: $0"
+
+fi
+
+FILE="$1"
+
+if [ -f "$FILE" ]; then
+
+    cat "$FILE"
+else
+        echo "Error: file '$FILE' no such file exists"
+
+fi

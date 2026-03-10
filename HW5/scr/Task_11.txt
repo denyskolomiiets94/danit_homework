@@ -1,0 +1,11 @@
+[Unit]
+Description=watchdir service
+After=network.target
+
+[Service]
+ExecStart=/bin/bash /home/denys/watch/watch1.sh
+User=denys
+Restart=always
+
+[Install]
+WantedBy=multi-user.target

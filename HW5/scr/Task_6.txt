@@ -1,0 +1,16 @@
+#!/bin/bash
+
+#Task 6
+
+echo "Enter the sentence:"
+read INPUT
+
+WORDS=($INPUT)
+
+
+for (( i=${#WORDS[@]}-1; i>=0; i-- )); do
+    echo -n "${WORDS[i]}"
+done
+
+echo ""
+

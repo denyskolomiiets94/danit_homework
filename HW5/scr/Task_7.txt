@@ -1,0 +1,7 @@
+#!/bin/bash
+
+FILE=$1
+
+#wc -l < "$FILE"
+
+echo -e "The numbers of lines in this file: \n$(wc -l <"$FILE")"
