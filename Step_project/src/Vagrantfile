@@ -1,0 +1,50 @@
+Vagrant.configure("2") do |config|
+
+  config.vm.box_check_update = false
+
+  # Читаємо .env
+  env = {}
+
+  File.readlines(".env").each do |line|
+    next if line.strip.empty?
+    key, value = line.strip.split("=", 2)
+    env[key] = value
+  end
+
+  # ================= DB =================
+  config.vm.define "db-vm" do |db|
+    db.vm.box = "ubuntu/jammy64"
+    db.vm.hostname = "db-vm"
+
+    db.vm.network "public_network", ip: env["DB_IP"]
+
+    db.vm.provider "virtualbox" do |vb|
+      vb.name = "petclinic-db"
+      vb.memory = 2048
+      vb.cpus = 2
+    end
+
+    db.vm.provision "shell",
+      path: "provision/postgres.sh",
+      env: env
+  end
+
+  # ================= APP =================
+  config.vm.define "app-vm" do |app|
+    app.vm.box = "ubuntu/jammy64"
+    app.vm.hostname = "app-vm"
+
+    app.vm.network "public_network", ip: env["APP_IP"]
+
+    app.vm.provider "virtualbox" do |vb|
+      vb.name = "petclinic-app"
+      vb.memory = 4096
+      vb.cpus = 2
+    end
+
+    app.vm.provision "shell",
+      path: "provision/app.sh",
+      env: env
+  end
+
+end

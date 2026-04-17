@@ -1,0 +1,17 @@
+[Unit]
+Description=PetClinic Spring Boot App
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+User=appuser
+WorkingDirectory=/home/appuser
+EnvironmentFile=/home/appuser/.env
+
+ExecStart=/usr/bin/java -jar /home/appuser/app.jar
+
+Restart=always
+RestartSec=5
+
+[Install]
+WantedBy=multi-user.target
