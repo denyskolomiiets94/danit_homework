@@ -1,0 +1,32 @@
+
+1. GET всі студенти
+[{'age': '30', 'id': '2', 'name': 'Oleh', 'surname': 'Petrov'}, {'age': '32', 'id': '4', 'name': 'Denys', 'surname': 'Kol'}]
+
+2. POST створення студентів
+{'age': '25', 'id': '5', 'name': 'Denys', 'surname': 'Ivanov'}
+{'age': '22', 'id': '6', 'name': 'Oleh', 'surname': 'Petrov'}
+{'age': '20', 'id': '7', 'name': 'Anna', 'surname': 'Sydorenko'}
+
+3. GET всі студенти після створення
+[{'age': '30', 'id': '2', 'name': 'Oleh', 'surname': 'Petrov'}, {'age': '32', 'id': '4', 'name': 'Denys', 'surname': 'Kol'}, {'age': '25', 'id': '5', 'name': 'Denys', 'surname': 'Ivanov'}, {'age': '22', 'id': '6', 'name': 'Oleh', 'surname': 'Petrov'}, {'age': '20', 'id': '7', 'name': 'Anna', 'surname': 'Sydorenko'}]
+
+4. PATCH другий студент (вік)
+{'age': '30', 'id': '6', 'name': 'Oleh', 'surname': 'Petrov'}
+
+5. GET другий студент
+{'age': '30', 'id': '6', 'name': 'Oleh', 'surname': 'Petrov'}
+
+6. PUT третій студент
+{'age': '28', 'id': '7', 'name': 'AnnaUpdated', 'surname': 'NewSurname'}
+
+7. GET третій студент
+{'age': '28', 'id': '7', 'name': 'AnnaUpdated', 'surname': 'NewSurname'}
+
+8. GET всі студенти
+[{'age': '30', 'id': '2', 'name': 'Oleh', 'surname': 'Petrov'}, {'age': '32', 'id': '4', 'name': 'Denys', 'surname': 'Kol'}, {'age': '25', 'id': '5', 'name': 'Denys', 'surname': 'Ivanov'}, {'age': '30', 'id': '6', 'name': 'Oleh', 'surname': 'Petrov'}, {'age': '28', 'id': '7', 'name': 'AnnaUpdated', 'surname': 'NewSurname'}]
+
+9. DELETE перший студент
+{'message': 'Student deleted'}
+
+10. GET всі студенти після видалення
+[{'age': '30', 'id': '2', 'name': 'Oleh', 'surname': 'Petrov'}, {'age': '32', 'id': '4', 'name': 'Denys', 'surname': 'Kol'}, {'age': '30', 'id': '6', 'name': 'Oleh', 'surname': 'Petrov'}, {'age': '28', 'id': '7', 'name': 'AnnaUpdated', 'surname': 'NewSurname'}]
