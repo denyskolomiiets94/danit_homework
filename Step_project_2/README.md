@@ -4,10 +4,12 @@
 3 - Створити користувача на Docker Hub і створити токен. 
 4 - Відкрити Git Bash і створити папку проєкту, наприклад StepProject2
 5 - Клонувати проєкт з GitHub за посиланням: 
+    https://github.com/denyskolomiiets94/danit_homework/tree/main/Step_project_2
 6 - Структура має бути така: 
     Папка StepProject2 містить Vagrantfile - який створює дві віртуальні машини, також має бути папка src
     В папці src має бути два скріпта master.sh, worker.sh які додатково налаштовують дві віртуальні машини 
-    master (додатково встанолює: openjdk-21-jdk, curl, wget, net-tools) і worker (додатково встанолює: docker.io, openjdk-21-jdk), 
+    master (додатково встанолює: openjdk-21-jdk, curl, wget, net-tools) і worker (додатково встанолює: docker.io, 
+    openjdk-21-jdk), 
 7 - Перейти в папку проєкту де знаходиться Vagrantfile і виконати команду "vagrant up" і дочекатися створення двох VM:
     Jenkins Master і Jenkins Worker
 8 - Налаштувати jenkins-master і jenkins-worker
