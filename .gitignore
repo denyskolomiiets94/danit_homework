@@ -3,3 +3,9 @@
 .vagrant
 tmp
 NewProgect
+.terraform/
+.terraform.lock.hcl
+*.tfstate
+*.tfstate.*
+*.tfplan
+terraform.tfstate.backup
