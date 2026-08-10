@@ -1,0 +1,90 @@
+---
+- name: Configure Jenkins Master
+  hosts: jenkins_master
+  become: true
+
+  tasks:
+
+    - name: Update apt cache
+      apt:
+        update_cache: true
+        cache_valid_time: 3600
+
+    - name: Install required packages
+      apt:
+        name:
+          - openjdk-21-jdk
+          - curl
+          - wget
+          - nginx
+        state: present
+
+    - name: Download Jenkins package
+      get_url:
+        url: https://get.jenkins.io/debian-stable/jenkins_2.528.1_all.deb
+        dest: /tmp/jenkins.deb
+        mode: "0644"
+
+    - name: Install Jenkins
+      apt:
+        deb: /tmp/jenkins.deb
+
+    - name: Fix Jenkins dependencies
+      apt:
+        name: jenkins
+        state: present
+
+    - name: Enable and start Jenkins
+      systemd:
+        name: jenkins
+        enabled: true
+        state: started
+
+    - name: Enable and start Nginx
+      systemd:
+        name: nginx
+        enabled: true
+        state: started
+
+    - name: Configure Nginx reverse proxy for Jenkins
+      copy:
+        dest: /etc/nginx/sites-available/jenkins
+        mode: "0644"
+        content: |
+          server {
+              listen 80;
+              server_name _;
+
+              location / {
+                  proxy_pass http://127.0.0.1:8080;
+
+                  proxy_set_header Host $host;
+                  proxy_set_header X-Real-IP $remote_addr;
+                  proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+                  proxy_set_header X-Forwarded-Proto $scheme;
+
+                  proxy_http_version 1.1;
+                  proxy_request_buffering off;
+              }
+          }
+
+    - name: Enable Jenkins Nginx configuration
+      file:
+        src: /etc/nginx/sites-available/jenkins
+        dest: /etc/nginx/sites-enabled/jenkins
+        state: link
+        force: true
+
+    - name: Remove default Nginx configuration
+      file:
+        path: /etc/nginx/sites-enabled/default
+        state: absent
+
+    - name: Test Nginx configuration
+      command: nginx -t
+      changed_when: false
+
+    - name: Restart Nginx
+      systemd:
+        name: nginx
+        state: restarted

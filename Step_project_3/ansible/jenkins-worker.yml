@@ -1,0 +1,57 @@
+---
+- name: Configure Jenkins Worker
+  hosts: jenkins_worker
+  become: true
+
+  tasks:
+
+    - name: Update apt cache
+      apt:
+        update_cache: true
+        cache_valid_time: 3600
+
+    - name: Install Java and Docker
+      apt:
+        name:
+          - openjdk-21-jdk
+          - docker.io
+          - docker-compose-v2
+        state: present
+
+    - name: Enable Docker service
+      systemd:
+        name: docker
+        enabled: true
+        state: started
+
+    - name: Create Jenkins user
+      user:
+        name: jenkins
+        shell: /bin/bash
+        create_home: true
+    - name: Create Jenkins SSH directory
+      file:
+        path: /home/jenkins/.ssh
+        state: directory
+        owner: jenkins
+        group: jenkins
+        mode: "0700"
+
+    - name: Add Jenkins SSH public key
+      authorized_key:
+        user: jenkins
+        state: present
+        key: "{{ lookup('file', lookup('env', 'HOME') + '/.ssh/jenkins_worker_key.pub') }}"
+
+    - name: Add Jenkins user to Docker group
+      user:
+        name: jenkins
+        groups: docker
+        append: true
+
+    - name: Allow Jenkins to use sudo without password
+      copy:
+        dest: /etc/sudoers.d/jenkins
+        content: |
+          jenkins ALL=(ALL) NOPASSWD:ALL
+        mode: "0440"
