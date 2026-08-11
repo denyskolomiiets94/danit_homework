@@ -1,0 +1,344 @@
+Started by user admin
+Obtained Jenkinsfile from git https://github.com/denyskolomiiets94/app
+[Pipeline] Start of Pipeline
+[Pipeline] node
+Running on worker1 in /home/jenkins/workspace/step_projec_3
+[Pipeline] {
+[Pipeline] stage
+[Pipeline] { (Declarative: Checkout SCM)
+[Pipeline] checkout
+Selected Git installation does not exist. Using Default
+The recommended git tool is: NONE
+No credentials specified
+Fetching changes from the remote Git repository
+ > git rev-parse --resolve-git-dir /home/jenkins/workspace/step_projec_3/.git # timeout=10
+Checking out Revision 9462a73b318a8d52ad87757380a74840dce2cfef (refs/remotes/origin/main)
+ > git config remote.origin.url https://github.com/denyskolomiiets94/app # timeout=10
+Fetching upstream changes from https://github.com/denyskolomiiets94/app
+ > git --version # timeout=10
+ > git --version # 'git version 2.53.0'
+ > git fetch --tags --force --progress -- https://github.com/denyskolomiiets94/app +refs/heads/*:refs/remotes/origin/* # timeout=10
+ > git rev-parse refs/remotes/origin/main^{commit} # timeout=10
+Commit message: "Update Jenkinsfile"
+ > git config core.sparsecheckout # timeout=10
+ > git checkout -f 9462a73b318a8d52ad87757380a74840dce2cfef # timeout=10
+ > git rev-list --no-walk 813d2109e360ce09f6cd59eea6caed8e74549b09 # timeout=10
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] withEnv
+[Pipeline] {
+[Pipeline] withEnv
+[Pipeline] {
+[Pipeline] stage
+[Pipeline] { (Checkout)
+[Pipeline] checkout
+Selected Git installation does not exist. Using Default
+The recommended git tool is: NONE
+No credentials specified
+Fetching changes from the remote Git repository
+Checking out Revision 9462a73b318a8d52ad87757380a74840dce2cfef (refs/remotes/origin/main)
+Commit message: "Update Jenkinsfile"
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] stage
+[Pipeline] { (Build Docker Image)
+[Pipeline] sh
+ > git rev-parse --resolve-git-dir /home/jenkins/workspace/step_projec_3/.git # timeout=10
+ > git config remote.origin.url https://github.com/denyskolomiiets94/app # timeout=10
+Fetching upstream changes from https://github.com/denyskolomiiets94/app
+ > git --version # timeout=10
+ > git --version # 'git version 2.53.0'
+ > git fetch --tags --force --progress -- https://github.com/denyskolomiiets94/app +refs/heads/*:refs/remotes/origin/* # timeout=10
+ > git rev-parse refs/remotes/origin/main^{commit} # timeout=10
+ > git config core.sparsecheckout # timeout=10
+ > git checkout -f 9462a73b318a8d52ad87757380a74840dce2cfef # timeout=10
++ docker build -t jonnydonnybonny2112/step_3:4 .
+DEPRECATED: The legacy builder is deprecated and will be removed in a future release.
+            Install the buildx component to build images with BuildKit:
+            https://docs.docker.com/go/buildx/
+
+Sending build context to Docker daemon  105.5kB
+Step 1/8 : FROM node:14
+ ---> a158d3b9b4e3
+Step 2/8 : WORKDIR /app
+ ---> Using cache
+ ---> 7e7665b41467
+Step 3/8 : COPY package*.json ./
+ ---> Using cache
+ ---> 0c6b4e2ab14d
+Step 4/8 : RUN npm install
+ ---> Using cache
+ ---> 80d18a291d7c
+Step 5/8 : COPY . .
+ ---> 0c420bdee5b4
+Step 6/8 : EXPOSE 3000
+ ---> Running in d8e81ff73c60
+ ---> Removed intermediate container d8e81ff73c60
+ ---> eed451604f85
+Step 7/8 : ENTRYPOINT ["npm"]
+ ---> Running in c718072aad12
+ ---> Removed intermediate container c718072aad12
+ ---> 27992b6c60c3
+Step 8/8 : CMD ["test"]
+ ---> Running in a0572d0b4175
+ ---> Removed intermediate container a0572d0b4175
+ ---> 90560115abba
+Successfully built 90560115abba
+Successfully tagged jonnydonnybonny2112/step_3:4
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] stage
+[Pipeline] { (Run Tests)
+[Pipeline] sh
++ docker run --rm jonnydonnybonny2112/step_3:4
+
+> app@1.0.0 test /app
+> jest
+
+  console.log
+    App listening
+
+      at Server.log (index.js:11:11)
+
+PASS tests/app.test.js
+  GET /
+    ✓ responds to / (309 ms)
+
+Test Suites: 1 passed, 1 total
+Tests:       1 passed, 1 total
+Snapshots:   0 total
+Time:        1.037 s
+Ran all test suites.
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] stage
+[Pipeline] { (Push Image)
+[Pipeline] withCredentials
+Masking supported pattern matches of $DOCKER_PASS
+[Pipeline] {
+[Pipeline] sh
++ echo ****
++ docker login -u jonnydonnybonny2112 --password-stdin
+Login Succeeded
++ docker tag jonnydonnybonny2112/step_3:4 jonnydonnybonny2112/step_3:latest
++ docker push jonnydonnybonny2112/step_3:4
+The push refers to repository [docker.io/jonnydonnybonny2112/step_3]
+5f32ed3c3f27: Waiting
+0c8cc2f24a4d: Waiting
+2ff1d7c41c74: Waiting
+0d27a8e86132: Waiting
+3d2201bd995c: Waiting
+ac23bc343124: Waiting
+1de76e268b10: Waiting
+cc758e7ee729: Waiting
+2c0264e16f90: Waiting
+b253aeafeaa7: Waiting
+a6268fba9b81: Waiting
+d9a8df589451: Waiting
+6f51ee005dea: Waiting
+0c8cc2f24a4d: Waiting
+2ff1d7c41c74: Waiting
+0d27a8e86132: Waiting
+3d2201bd995c: Waiting
+ac23bc343124: Waiting
+1de76e268b10: Waiting
+cc758e7ee729: Waiting
+2c0264e16f90: Waiting
+b253aeafeaa7: Waiting
+a6268fba9b81: Waiting
+d9a8df589451: Waiting
+6f51ee005dea: Waiting
+5f32ed3c3f27: Waiting
+5f32ed3c3f27: Waiting
+0c8cc2f24a4d: Waiting
+2ff1d7c41c74: Waiting
+0d27a8e86132: Waiting
+3d2201bd995c: Waiting
+ac23bc343124: Waiting
+1de76e268b10: Waiting
+cc758e7ee729: Waiting
+2c0264e16f90: Waiting
+b253aeafeaa7: Waiting
+a6268fba9b81: Waiting
+d9a8df589451: Waiting
+6f51ee005dea: Waiting
+2ff1d7c41c74: Waiting
+0d27a8e86132: Waiting
+3d2201bd995c: Waiting
+ac23bc343124: Waiting
+1de76e268b10: Waiting
+cc758e7ee729: Waiting
+2c0264e16f90: Waiting
+b253aeafeaa7: Waiting
+a6268fba9b81: Waiting
+d9a8df589451: Waiting
+6f51ee005dea: Waiting
+5f32ed3c3f27: Waiting
+0c8cc2f24a4d: Waiting
+cc758e7ee729: Waiting
+2c0264e16f90: Waiting
+b253aeafeaa7: Waiting
+a6268fba9b81: Waiting
+d9a8df589451: Waiting
+6f51ee005dea: Waiting
+5f32ed3c3f27: Waiting
+0c8cc2f24a4d: Waiting
+2ff1d7c41c74: Waiting
+0d27a8e86132: Waiting
+3d2201bd995c: Waiting
+ac23bc343124: Waiting
+1de76e268b10: Waiting
+1de76e268b10: Waiting
+cc758e7ee729: Waiting
+2c0264e16f90: Waiting
+b253aeafeaa7: Waiting
+a6268fba9b81: Waiting
+d9a8df589451: Waiting
+6f51ee005dea: Layer already exists
+5f32ed3c3f27: Waiting
+0c8cc2f24a4d: Waiting
+2ff1d7c41c74: Waiting
+0d27a8e86132: Waiting
+3d2201bd995c: Waiting
+ac23bc343124: Layer already exists
+5f32ed3c3f27: Layer already exists
+0c8cc2f24a4d: Waiting
+2ff1d7c41c74: Waiting
+0d27a8e86132: Waiting
+3d2201bd995c: Waiting
+1de76e268b10: Waiting
+cc758e7ee729: Waiting
+2c0264e16f90: Waiting
+b253aeafeaa7: Waiting
+a6268fba9b81: Waiting
+d9a8df589451: Layer already exists
+2c0264e16f90: Waiting
+b253aeafeaa7: Layer already exists
+a6268fba9b81: Layer already exists
+0c8cc2f24a4d: Layer already exists
+2ff1d7c41c74: Layer already exists
+0d27a8e86132: Layer already exists
+3d2201bd995c: Layer already exists
+1de76e268b10: Layer already exists
+cc758e7ee729: Layer already exists
+2c0264e16f90: Waiting
+2c0264e16f90: Waiting
+2c0264e16f90: Waiting
+2c0264e16f90: Pushed
+4: digest: sha256:90560115abba4bd72e5e601ae33386b43117e408fc2d9cfa9fec7a0807be8464 size: 3202
++ docker push jonnydonnybonny2112/step_3:latest
+The push refers to repository [docker.io/jonnydonnybonny2112/step_3]
+1de76e268b10: Waiting
+2c0264e16f90: Waiting
+6f51ee005dea: Waiting
+2ff1d7c41c74: Waiting
+5f32ed3c3f27: Waiting
+ac23bc343124: Waiting
+d9a8df589451: Waiting
+b253aeafeaa7: Waiting
+0c8cc2f24a4d: Waiting
+3d2201bd995c: Waiting
+0d27a8e86132: Waiting
+cc758e7ee729: Waiting
+a6268fba9b81: Waiting
+b253aeafeaa7: Waiting
+0c8cc2f24a4d: Waiting
+3d2201bd995c: Waiting
+0d27a8e86132: Waiting
+cc758e7ee729: Waiting
+a6268fba9b81: Waiting
+1de76e268b10: Waiting
+2c0264e16f90: Waiting
+6f51ee005dea: Waiting
+2ff1d7c41c74: Waiting
+5f32ed3c3f27: Waiting
+ac23bc343124: Waiting
+d9a8df589451: Waiting
+6f51ee005dea: Waiting
+2ff1d7c41c74: Waiting
+5f32ed3c3f27: Waiting
+ac23bc343124: Waiting
+d9a8df589451: Waiting
+b253aeafeaa7: Waiting
+0c8cc2f24a4d: Waiting
+3d2201bd995c: Waiting
+0d27a8e86132: Waiting
+cc758e7ee729: Waiting
+a6268fba9b81: Waiting
+1de76e268b10: Waiting
+2c0264e16f90: Waiting
+a6268fba9b81: Waiting
+1de76e268b10: Waiting
+2c0264e16f90: Waiting
+6f51ee005dea: Waiting
+2ff1d7c41c74: Waiting
+5f32ed3c3f27: Waiting
+ac23bc343124: Waiting
+d9a8df589451: Waiting
+b253aeafeaa7: Waiting
+0c8cc2f24a4d: Waiting
+3d2201bd995c: Waiting
+0d27a8e86132: Waiting
+cc758e7ee729: Waiting
+1de76e268b10: Waiting
+2c0264e16f90: Waiting
+6f51ee005dea: Waiting
+2ff1d7c41c74: Waiting
+5f32ed3c3f27: Waiting
+ac23bc343124: Waiting
+d9a8df589451: Waiting
+b253aeafeaa7: Waiting
+0c8cc2f24a4d: Waiting
+3d2201bd995c: Waiting
+0d27a8e86132: Waiting
+cc758e7ee729: Waiting
+a6268fba9b81: Waiting
+cc758e7ee729: Waiting
+a6268fba9b81: Layer already exists
+1de76e268b10: Waiting
+2c0264e16f90: Waiting
+6f51ee005dea: Waiting
+2ff1d7c41c74: Waiting
+5f32ed3c3f27: Waiting
+ac23bc343124: Waiting
+d9a8df589451: Waiting
+b253aeafeaa7: Waiting
+0c8cc2f24a4d: Waiting
+3d2201bd995c: Waiting
+0d27a8e86132: Layer already exists
+0c8cc2f24a4d: Waiting
+3d2201bd995c: Layer already exists
+cc758e7ee729: Waiting
+1de76e268b10: Layer already exists
+2c0264e16f90: Layer already exists
+6f51ee005dea: Layer already exists
+2ff1d7c41c74: Layer already exists
+5f32ed3c3f27: Layer already exists
+ac23bc343124: Layer already exists
+d9a8df589451: Layer already exists
+b253aeafeaa7: Layer already exists
+0c8cc2f24a4d: Layer already exists
+cc758e7ee729: Layer already exists
+latest: digest: sha256:90560115abba4bd72e5e601ae33386b43117e408fc2d9cfa9fec7a0807be8464 size: 3202
+[Pipeline] }
+[Pipeline] // withCredentials
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] stage
+[Pipeline] { (Declarative: Post Actions)
+[Pipeline] cleanWs
+[WS-CLEANUP] Deleting project workspace...
+[WS-CLEANUP] Deferred wipeout is used...
+[WS-CLEANUP] done
+[Pipeline] echo
+Build SUCCESS
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] }
+[Pipeline] // withEnv
+[Pipeline] }
+[Pipeline] // withEnv
+[Pipeline] }
+[Pipeline] // node
+[Pipeline] End of Pipeline
+Finished: SUCCESS

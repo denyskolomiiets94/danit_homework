@@ -32,7 +32,7 @@ resource "local_file" "ansible_inventory" {
 master ansible_host=${module.ec2.master_public_ip}
 
 [jenkins_worker]
-worker ansible_host=jenkins-worker
+worker ansible_host=${module.ec2.worker_private_ip}
 
 [jenkins_master:vars]
 ansible_user=ubuntu
@@ -42,5 +42,6 @@ ansible_python_interpreter=/usr/bin/python3
 [jenkins_worker:vars]
 ansible_user=ubuntu
 ansible_python_interpreter=/usr/bin/python3
+ansible_ssh_common_args='-o ProxyJump=ubuntu@${module.ec2.master_public_ip}'
 EOT
 }

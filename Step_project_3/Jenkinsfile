@@ -4,7 +4,7 @@ pipeline {
     }
 
     environment {
-        IMAGE_NAME = 'jonnydonnybonny2112/step2'
+        IMAGE_NAME = 'jonnydonnybonny2112/step_3'
     }
 
     stages {
@@ -31,7 +31,7 @@ pipeline {
             steps {
                 withCredentials([
                     usernamePassword(
-                        credentialsId: 'dockerhub_step2',
+                        credentialsId: 'dockerhub_step3',
                         usernameVariable: 'DOCKER_USER',
                         passwordVariable: 'DOCKER_PASS'
                     )
