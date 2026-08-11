@@ -26,7 +26,7 @@ Worker знаходиться у приватній підмережі та не
 
 8 - Налаштувати Jenkins Master і Jenkins Worker. 
 переходимо в папку ansible і запускаємо дві команди, спочатку "ansible-playbook jenkins-master.yml" і потім 
-"ansible-playbook jenkins-master.yml". Після виконання playbook Jenkins Master та Jenkins Worker будуть налаштовані.
+"ansible-playbook jenkins-worker.yml". Після виконання playbook Jenkins Master та Jenkins Worker будуть налаштовані.
 
 9 - налаштовуємо Jenkins, переходимо на публічну машинку, IP можна дізнатись в aws - ec2 - instances - і обрати Jenkins-Master.
 коли перейшли на публічну адресу Jenkins-Master треба буде виконати активацію jenkins за вказаною інструкцією і потім інсталювати його. 
