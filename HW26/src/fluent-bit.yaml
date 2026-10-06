@@ -1,0 +1,20 @@
+service:
+  flush: 1
+  log_level: info
+
+pipeline:
+  inputs:
+    - name: forward
+      listen: 0.0.0.0
+      Port: 24224
+
+  outputs:
+    - name: es
+      match: '*'
+      host: elasticsearch
+      port: 9200
+      index: node-logs
+      suppress_type_name: On
+
+    - name: stdout
+      match: "*"
