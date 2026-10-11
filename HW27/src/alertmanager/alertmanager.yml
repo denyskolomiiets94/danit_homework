@@ -1,0 +1,25 @@
+global:
+  resolve_timeout: 1m
+
+route:
+  receiver: telegram
+  group_by: ['alertname', 'instance']
+  group_wait: 10s
+  group_interval: 30s
+  repeat_interval: 4h
+
+receivers:
+  - name: telegram
+    telegram_configs:
+      - bot_token: "я стер свій токен "
+        chat_id: я стер id бота
+        parse_mode: HTML
+        message: |
+         <b>Prometheus — сповіщення</b>
+         {{ range .Alerts }}
+         {{ if eq .Status "firing" }}🔴 <b>Статус: FIRING</b>{{ else }}🟢 <b>Статус: RESOLVED</b>{{ end }}
+         <b>Алерт:</b> {{ .Labels.alertname }}
+         <b>Опис:</b> {{ .Annotations.summary }}
+         <b>Деталі:</b> {{ .Annotations.description }}
+         <b>Ціль:</b> {{ .Labels.instance }}
+         {{ end }}

@@ -1,0 +1,39 @@
+groups:
+  - name: system-alerts
+    rules:
+      - alert: HighCPUUsage
+        expr: 100 * (1 - avg by (instance) (rate(node_cpu_seconds_total{mode="idle"}[5m]))) > 80
+        for: 2m
+        labels:
+          severity: warning
+        annotations:
+          summary: "CPU usage is above 80%"
+          description: 'CPU usage is {{ printf "%.1f" $value }}% on {{ $labels.instance }} (threshold: 80%, sustained for 2 minutes).'
+
+      - alert: HighRAMUsage
+        expr: 100 * (1 - node_memory_MemAvailable_bytes / node_memory_MemTotal_bytes) > 80
+        for: 2m
+        labels:
+          severity: warning
+        annotations:
+          summary: "RAM usage is above 80%"
+          description: 'RAM usage is {{ printf "%.1f" $value }}% on {{ $labels.instance }} (threshold: 80%, sustained for 2 minutes).'
+
+
+      - alert: LowDiskSpace
+        expr: 100 * (node_filesystem_avail_bytes{mountpoint="/", fstype!~"tmpfs|overlay"} / node_filesystem_size_bytes{mountpoint="/", fstype!~"tmpfs|overlay"}) < 15
+        for: 2m
+        labels:
+          severity: critical
+        annotations:
+          summary: "Free disk space is below 15%"
+          description: 'Free disk space is {{ printf "%.1f" $value }}% on {{ $labels.instance }} at {{ $labels.mountpoint }} (threshold: 15%).'
+
+      - alert: PrometheusTargetDown
+        expr: up == 0
+        for: 1m
+        labels:
+          severity: critical
+        annotations:
+          summary: "Prometheus target is down"
+          description: "Target {{ $labels.job }} ({{ $labels.instance }}) is unavailable."
