@@ -9,3 +9,4 @@ subnet_cidr = {
   private_b = "192.168.4.0/24"
 }
 
+cluster_name = "student1"

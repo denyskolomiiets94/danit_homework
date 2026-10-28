@@ -20,3 +20,9 @@ variable "subnet_cidr" {
     private_b = string
   })
 }
+
+variable "cluster_name" {
+  type        = string
+  description = "Name of the EKS cluster"
+}
+
