@@ -1,0 +1,25 @@
+
+apiVersion: apps/v1
+kind: Deployment
+
+metadata:
+  name: final-step-app
+
+spec:
+  replicas: 2
+
+  selector:
+    matchLabels:
+      app: final-step-app
+
+  template:
+    metadata:
+      labels:
+        app: final-step-app
+
+    spec:
+      containers:
+        - name: final-step-app
+          image: jonnydonnybonny2112/final-step-app:latest
+          ports:
+            - containerPort: 8080
