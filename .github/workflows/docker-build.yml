@@ -33,4 +33,4 @@ jobs:
           push: true
           tags: |
             jonnydonnybonny2112/final-step-app:latest
-            jonnydonnybonny2112/final-step-app:1.0
+            jonnydonnybonny2112/final-step-app:${{ github.sha }}
