@@ -12,7 +12,7 @@ class MyHandler(BaseHTTPRequestHandler):
             self.end_headers()
 
             self.wfile.write(
-                f"Hello from Kubernetes! Pod IP: {pod_ip}".encode()
+                f"Hello from ArgoCD! Pod IP: {pod_ip}".encode()
             )
         else:
             self.send_response(404)
