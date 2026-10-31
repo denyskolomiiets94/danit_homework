@@ -15,7 +15,7 @@ spec:
   ingressClassName: alb
 
   rules:
-    - host: argocd.student1.devops14.test-danit.com
+    - host: argocd.jimbo-devops.pp.ua
       http:
         paths:
           - path: /

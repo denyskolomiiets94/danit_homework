@@ -15,7 +15,7 @@ spec:
   ingressClassName: alb
 
   rules:
-    - host: app.student1.devops14.test-danit.com
+    - host: app.jimbo-devops.pp.ua
       http:
         paths:
           - path: /
