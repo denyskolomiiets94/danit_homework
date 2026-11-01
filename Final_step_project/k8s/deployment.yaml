@@ -20,6 +20,6 @@ spec:
     spec:
       containers:
         - name: final-step-app
-          image: jonnydonnybonny2112/final-step-app:979a438de334d38a1cb0a29be287e5389d321574
+          image: jonnydonnybonny2112/final-step-app:d772e13a1da266d75f85adde4a6e4062ed7f24dc
           ports:
             - containerPort: 8080
