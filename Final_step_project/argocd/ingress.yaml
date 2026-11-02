@@ -11,6 +11,7 @@ metadata:
     alb.ingress.kubernetes.io/healthcheck-path: /healthz
     alb.ingress.kubernetes.io/group.name: student-denys
     alb.ingress.kubernetes.io/listen-ports: '[{"HTTP":80},{"HTTPS":443}]'
+    alb.ingress.kubernetes.io/certificate-arn: arn:aws:acm:eu-central-1:943865900046:certificate/a220d436-1cee-4f0d-a94a-11cd6169627a
 
 
 spec:
