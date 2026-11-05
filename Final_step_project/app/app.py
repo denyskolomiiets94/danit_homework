@@ -12,7 +12,7 @@ class MyHandler(BaseHTTPRequestHandler):
             self.end_headers()
 
             self.wfile.write(
-                f"Hello from CI/CD v9! Pod IP: {pod_ip}".encode()
+                f"Hello from CI/CD v10! Pod IP: {pod_ip}".encode()
             )
         else:
             self.send_response(404)
